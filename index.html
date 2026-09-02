@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu Interativo - Sala de Aula</title>
+    <style>
+      /* Estilização básica da página */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      /* Container central do menu */
+      .menu-container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 320px;
+        text-align: center;
+      }
+
+      /* Estilo dos botões */
+      button {
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 5px;
+        background-color: #0056b3;
+        color: white;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      /* Efeito ao passar o mouse no botão */
+      button:hover {
+        background-color: #003d80;
+      }
+
+      /* Área de exibição de resultados */
+      #resultado {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #e9ecef;
+        border-radius: 5px;
+        font-weight: bold;
+        color: #333;
+        min-height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="menu-container">
+      <h2>Menu Interativo</h2>
+
+      <button onclick="calcularMedia()">1. Calcular Média Final</button>
+      <button onclick="checarFrequencia()">2. Checar Frequência</button>
+      <button onclick="sorteadordeGrupos()">3. Sorteador de Grupos</button>
+      <button onclick="limparStatus()">4. Limpar Status</button>
+
+      <div id="resultado">Selecione uma opção acima.</div>
+    </div>
+
+    <script>
+      // Seleciona o elemento HTML onde a mensagem será exibida
+      const painelResultado = document.getElementById("resultado");
+
+      // Opção 1: Calcule a Média
+      function calcularMedia() {
+        const nota1 = prompt("Digite a nota da primeira etapa:");
+        const nota2 = prompt("Digite a nota da segunda etapa:");
+
+        if (nota1 === null || nota2 === null) return;
+
+        const numNota1 = Number(nota1);
+        const numNota2 = Number(nota2);
+
+        if (isNaN(numNota1) || isNaN(numNota2)) {
+          painelResultado.innerText =
+            "Erro: Por favor, digite apenas números válidos!";
+        } else {
+          const media = (numNota1 + numNota2) / 2;
+
+          if (media >= 60) {
+            painelResultado.innerText = `Média: ${media.toFixed(2)} - Situação: APROVADO`;
+          } else {
+            painelResultado.innerText = `Média: ${media.toFixed(2)} - Situação: RECUPERAÇÃO`;
+          }
+        }
+      }
+
+      // Opção 2: Frequencia e Faltas
+      function checarFrequencia() {
+        const totalAulas = prompt("Digite o número total de aulas:");
+        const faltas = prompt("Digite o número de faltas:");
+
+        if (totalAulas === null || faltas === null) return;
+
+        const numTotal = Number(totalAulas);
+        const numFaltas = Number(faltas);
+
+        if (isNaN(numTotal) || isNaN(numFaltas) || numTotal === 0) {
+          painelResultado.innerText =
+            "Erro: Por favor, digite apenas números válidos!";
+        } else {
+          const frequencia = ((numTotal - numFaltas) / numTotal) * 100;
+
+          if (frequencia < 75) {
+            painelResultado.innerText = `Frequência: ${frequencia.toFixed(2)}% - Atenção: abaixo do mínimo!`;
+          } else {
+            painelResultado.innerText = `Frequência: ${frequencia.toFixed(2)}% - Situação regular`;
+          }
+        }
+      }
+
+      // Opção 3: Sorteador de Grupo de 1 a 5
+      function sorteadordeGrupos() {
+        const grupoSorteado = Math.floor(Math.random() * 5) + 1;
+        painelResultado.innerText = `Grupo sorteado: ${grupoSorteado}`;
+      }
+      // Opção 4: Reseta o painel
+      function limparStatus() {
+        painelResultado.innerText = "Selecione uma opção acima.";
+      }
+    </script>
+  </body>
+</html>
